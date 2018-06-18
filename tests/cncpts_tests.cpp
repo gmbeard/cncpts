@@ -26,13 +26,15 @@ namespace traits {
 
 template<typename T>
 constexpr bool IsRandomAccess =
-    cncpts::DetectedValue<
-        ops::RandomAccess,
-        cncpts::DetectedType<traits::ConstIterator, T>>::value &&
-    cncpts::DetectedExact<
-        int const,
-        traits::ValueType,
-        cncpts::DetectedType<traits::ConstIterator, T>>::value;
+    cncpts::All<
+        cncpts::DetectedValue<
+            ops::RandomAccess,
+            cncpts::DetectedType<traits::ConstIterator, T>>,
+        cncpts::DetectedExact<
+            int const,
+            traits::ValueType,
+            cncpts::DetectedType<traits::ConstIterator, T>>
+    >::value;
         
 auto main(int, char const**) -> int {
 

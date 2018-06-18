@@ -51,6 +51,44 @@ namespace cncpts {
     template<typename To, template <typename...> class T, typename... Args>
     using DetectedConvertible =
         typename std::is_convertible<DetectedType<T, Args...>, To>::type;
+
+    template<bool B>
+    using bool_constant = std::integral_constant<bool, B>;
+
+    template<typename... T>
+    struct All;
+
+    template<typename T, typename... Ts>
+    struct All<T, Ts...> : 
+        bool_constant<
+            T::value &&
+            All<Ts...>::value
+        >
+    { };
+
+    template<>
+    struct All<> :
+        bool_constant<true>
+    { };
+
+    template<typename... T>
+    struct Any;
+
+    template<typename T, typename... Ts>
+    struct Any<T, Ts...> :
+        bool_constant<
+            T::value ||
+            Any<Ts...>::value
+        >
+    { };
+
+    template<>
+    struct Any<> : 
+        bool_constant<false>
+    { };
+
+    template<typename T>
+    using Not = bool_constant<!T::value>;
 }
 
 #endif //CNCPTS_CNCPTS_HPP_INCLUDED
