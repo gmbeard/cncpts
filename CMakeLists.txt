@@ -18,12 +18,12 @@ endif()
 
 install(
     FILES cmake/CncptsConfig.cmake
-    DESTINATION lib/cncpts/cmake
+    DESTINATION lib/cmake/cncpts
 )
 
 install(
     EXPORT CncptsTargets
     NAMESPACE Cncpts::
     FILE CncptsTargets.cmake
-    DESTINATION lib/cncpts/cmake
+    DESTINATION lib/cmake/cncpts
 )
